@@ -103,7 +103,7 @@ const thoughtTexts = [
 "Imagine a world where mistakes were celebrated as opportunities for growth.",
 "The scent of a loved one's perfume can transport you to a different time and place.",
 "What if we could experience all the emotions of a lifetime in a single day?",
-"The idea of parallel universes raises intriguing questions about the choices we make and their consequences.",
+"The idea of parallel universes raises intriguing questions about the choices we make and their consequences."
 ];
 
 const reactionTexts = [
@@ -156,7 +156,7 @@ const reactionTexts = [
 "I'm flummoxed.",
 "That's extraordinary!",
 "You're a savant!",
-"I'm left speechless.",
+"I'm left speechless."
 ];
 
 const users = [];
@@ -164,10 +164,22 @@ const users = [];
 // Get a random item given an array
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// Gets a random username
-const getRandomUsername = () =>
-  `${getRandomArrItem(usernames)}`;
+// Gets a random username info
+const getRandomUsername = () => {
+  const randomUsername = getRandomArrItem(usernames);
+  const index = usernames.indexOf(randomUsername);
+  return { username: randomUsername, index: index };
+};
 
+const getRandomUserInfo = getRandomUsername(); 
+
+const getRandomUserEmail = (username) => {
+  const index = usernames.indexOf(username);
+  if (index !== -1) {
+  return email[index];
+}
+  return null;
+};
 
 // Function to generate random thoughts that we can add to the database. Includes reactions.
 const getRandomThoughts = (int) => {
@@ -175,7 +187,7 @@ const getRandomThoughts = (int) => {
   for (let i = 0; i < int; i++) {
     results.push({
       thoughtText: getRandomArrItem(thoughtTexts),
-      username: getRandomUsername(),
+      username: `${getRandomUserInfo.username}`,
       reactions: [...getRandomReactions(3)],
     });
   }
@@ -191,7 +203,7 @@ const getRandomReactions = (int) => {
   for (let i = 0; i < int; i++) {
     results.push({
       reactionBody: getRandomArrItem(reactionTexts),
-      username: getRandomName(),
+      username: `${getRandomUserInfo.username}`,
     });
   }
   return results;
@@ -211,4 +223,4 @@ const getRandomFriends = (int) => {
 };
 
 // Export the functions for use in seed.js
-module.exports = { getRandomUsername, getRandomThoughts, getRandomReactions, getRandomFriends };
+module.exports = { getRandomUserEmail, getRandomUsername, getRandomThoughts, getRandomReactions, getRandomFriends, getRandomUserEmail };
