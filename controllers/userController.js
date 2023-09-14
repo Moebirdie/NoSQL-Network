@@ -11,11 +11,8 @@
 // DELETE by _id
     //remove associations (cascade)
 
-    
-/// SAMPLE DATA
 
-
-const { User, Application } = require('./models');
+const { User, Thoughts } = require('./models');
 
 module.exports = {
   // Get all users
