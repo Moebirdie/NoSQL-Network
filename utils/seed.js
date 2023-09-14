@@ -1,6 +1,7 @@
 const connection = require('../config/connection');
-const { User, Thought } = require('./models');
-const { getRandomUsernames, getRandomThoughts, getRandomFriends } = require('./data');
+const { User, Thought } = require('../Models');
+
+const { getRandomUsername, getRandomThoughts, getRandomUserEmail, getRandomFriends, getRandomReactions, getRandomUserEmail } = require('./data');
 
 connection.on('error', (err) => err);
 
@@ -19,26 +20,26 @@ connection.once('open', async () => {
   }
 
   const users = [];
-  const thoughts = getRandomThoughts(10);
+  const thoughts = getRandomThoughts(40);
+  const reactions = getRandomReactions(3);
+  const friends = getRandomFriends(4);
+
 
   for (let i = 0; i < 20; i++) {
-    const fullName = getRandomName();
-    const first = fullName.split(' ')[0];
-    const last = fullName.split(' ')[1];
-
+    const username = getRandomUsername();
+    const email = getRandomUserEmail(username);
     users.push({
-      first,
-      last,
-      age: Math.floor(Math.random() * (99 - 18 + 1) + 18),
+      username,
+      email
     });
   }
 
   await User.collection.insertMany(users);
-  await Application.collection.insertMany(applications);
+  await Thought.collection.insertMany(thoughts);
 
   // loop through the saved applications, for each application we need to generate a application response and insert the application responses
   console.table(users);
-  console.table(applications);
+  console.table(thoughts);
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });

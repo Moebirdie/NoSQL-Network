@@ -30,13 +30,13 @@ const thoughtSchema = new Schema(
 );
 
 // Create a virtual property `commentCount` that gets the amount of comments per post
-userSchema
+thoughtSchema
   .virtual('reactionCount')
   .get(function () {
     return this.reactions.length;
   });
 
-userSchema
+thoughtSchema
   .virtual('formatCreatedAt')
   .get(function () {
     return this.createdAt.toLocalDateString();
